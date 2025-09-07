@@ -1,0 +1,2 @@
+"""Maze environment module."""
+
