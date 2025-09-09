@@ -9,6 +9,17 @@ class MazeEnv(gym.Env):
 
     metadata = {"render_modes": ["human"]}
 
-    def __init__(self):
+    def __init__(self, size=5):
         super().__init__()
+        self.size = size
+        self.start = (0, 0)
+        self.goal = (size - 1, size - 1)
+        self.action_space = gym.spaces.Discrete(4)
+        self.observation_space = gym.spaces.Discrete(size * size)
+
+    def _pos_to_state(self, pos):
+        return pos[0] * self.size + pos[1]
+
+    def _state_to_pos(self, state):
+        return (state // self.size, state % self.size)
 
