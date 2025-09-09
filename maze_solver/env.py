@@ -26,3 +26,6 @@ class MazeEnv(gym.Env):
     def _state_to_pos(self, state):
         return (state // self.size, state % self.size)
 
+    def _is_terminal(self, pos):
+        return pos == self.goal or pos in getattr(self, "traps", set())
+
