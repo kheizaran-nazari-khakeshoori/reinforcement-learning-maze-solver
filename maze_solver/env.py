@@ -9,11 +9,14 @@ class MazeEnv(gym.Env):
 
     metadata = {"render_modes": ["human"]}
 
-    def __init__(self, size=5):
+    def __init__(self, size=5, walls=None):
         super().__init__()
         self.size = size
         self.start = (0, 0)
         self.goal = (size - 1, size - 1)
+        self.walls = set(walls) if walls else set()
+        if self.start in self.walls or self.goal in self.walls:
+            raise ValueError("walls cannot overlap start or goal")
         self.action_space = gym.spaces.Discrete(4)
         self.observation_space = gym.spaces.Discrete(size * size)
 
