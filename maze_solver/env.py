@@ -3,6 +3,8 @@
 import gymnasium as gym
 import numpy as np
 
+DEFAULT_SIZE = 5
+
 
 class MazeEnv(gym.Env):
     """Custom Gridworld maze environment.
@@ -14,7 +16,7 @@ class MazeEnv(gym.Env):
 
     metadata = {"render_modes": ["human"]}
 
-    def __init__(self, size=5, walls=None):
+    def __init__(self, size=DEFAULT_SIZE, walls=None):
         super().__init__()
         self.size = size
         self.start = (0, 0)
