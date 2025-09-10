@@ -5,6 +5,8 @@ import numpy as np
 
 DEFAULT_SIZE = 5
 
+__all__ = ["MazeEnv", "DEFAULT_SIZE"]
+
 
 class MazeEnv(gym.Env):
     """Custom Gridworld maze environment.
