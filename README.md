@@ -20,3 +20,9 @@ requirements.txt
 pip install -r requirements.txt
 pytest
 ```
+
+## Local Development
+- Branch `local_commit` holds work-in-progress (10 small commits, not pushed yet)
+- Helpers: `_pos_to_state`, `_state_to_pos`, `_is_terminal`, `DEFAULT_SIZE`
+- Run `pytest tests/test_state_helpers.py tests/test_terminal.py tests/test_wall_validation.py`
+
