@@ -43,6 +43,14 @@ class MazeEnv(gym.Env):
     def _state_to_pos(self, state):
         return (state // self.size, state % self.size)
 
+    def _is_valid(self, pos):
+        r, c = pos
+        if not (0 <= r < self.size and 0 <= c < self.size):
+            return False
+        if pos in self.walls or self.grid[pos] == 1:
+            return False
+        return True
+
     def _is_terminal(self, pos):
         return pos == self.goal or pos in getattr(self, "traps", set())
 
