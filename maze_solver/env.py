@@ -27,6 +27,13 @@ class MazeEnv(gym.Env):
         self.traps = set(traps) if traps else set()
         if self.start in self.walls or self.goal in self.walls:
             raise ValueError("walls cannot overlap start or goal")
+        self.agent_pos = self.start
+        self.grid = np.zeros((size, size), dtype=int)
+        for w in self.walls:
+            self.grid[w] = 1
+        for t in self.traps:
+            self.grid[t] = 2
+        self.grid[self.goal] = 3
         self.action_space = gym.spaces.Discrete(4)
         self.observation_space = gym.spaces.Discrete(size * size)
 
