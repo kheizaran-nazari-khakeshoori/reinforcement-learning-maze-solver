@@ -54,3 +54,8 @@ class MazeEnv(gym.Env):
     def _is_terminal(self, pos):
         return pos == self.goal or pos in getattr(self, "traps", set())
 
+    def reset(self, seed=None, options=None):
+        super().reset(seed=seed)
+        self.agent_pos = self.start
+        return self._pos_to_state(self.agent_pos), {}
+
