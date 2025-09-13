@@ -59,3 +59,11 @@ class MazeEnv(gym.Env):
         self.agent_pos = self.start
         return self._pos_to_state(self.agent_pos), {}
 
+    def step(self, action):
+        moves = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+        dr, dc = moves[action]
+        r, c = self.agent_pos
+        cand = (r + dr, c + dc)
+        self.agent_pos = cand
+        return self._pos_to_state(self.agent_pos), 0.0, False, False, {}
+
