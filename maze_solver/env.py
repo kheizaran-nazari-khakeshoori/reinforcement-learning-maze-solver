@@ -64,7 +64,7 @@ class MazeEnv(gym.Env):
         dr, dc = moves[action]
         r, c = self.agent_pos
         cand = (r + dr, c + dc)
-        if 0 <= cand[0] < self.size and 0 <= cand[1] < self.size:
+        if self._is_valid(cand):
             self.agent_pos = cand
         return self._pos_to_state(self.agent_pos), 0.0, False, False, {}
 
