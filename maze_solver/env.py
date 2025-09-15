@@ -66,7 +66,12 @@ class MazeEnv(gym.Env):
         cand = (r + dr, c + dc)
         if self._is_valid(cand):
             self.agent_pos = cand
-        reward = 1.0 if self.agent_pos == self.goal else -0.01
+        if self.agent_pos in self.traps:
+            reward = -1.0
+        elif self.agent_pos == self.goal:
+            reward = 1.0
+        else:
+            reward = -0.01
         terminated = self._is_terminal(self.agent_pos)
         return self._pos_to_state(self.agent_pos), reward, terminated, False, {}
 
