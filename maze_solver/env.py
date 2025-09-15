@@ -67,5 +67,6 @@ class MazeEnv(gym.Env):
         if self._is_valid(cand):
             self.agent_pos = cand
         reward = 1.0 if self.agent_pos == self.goal else -0.01
-        return self._pos_to_state(self.agent_pos), reward, False, False, {}
+        terminated = self._is_terminal(self.agent_pos)
+        return self._pos_to_state(self.agent_pos), reward, terminated, False, {}
 
