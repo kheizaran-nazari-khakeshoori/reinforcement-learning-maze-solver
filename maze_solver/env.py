@@ -54,6 +54,21 @@ class MazeEnv(gym.Env):
     def _is_terminal(self, pos):
         return pos == self.goal or pos in getattr(self, "traps", set())
 
+    def _render_text(self):
+        rows = []
+        for r in range(self.size):
+            row = ""
+            for c in range(self.size):
+                pos = (r, c)
+                if pos == self.agent_pos:
+                    row += "A "
+                elif pos == self.goal:
+                    row += "G "
+                else:
+                    row += ". "
+            rows.append(row.strip())
+        return "\n".join(rows)
+
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
         self.agent_pos = self.start
