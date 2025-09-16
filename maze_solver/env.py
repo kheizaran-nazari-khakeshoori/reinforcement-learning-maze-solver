@@ -61,13 +61,20 @@ class MazeEnv(gym.Env):
             for c in range(self.size):
                 pos = (r, c)
                 if pos == self.agent_pos:
-                    row += "A "
+                    row += "\033[94mA\033[0m "
                 elif pos == self.goal:
-                    row += "G "
+                    row += "\033[92mG\033[0m "
                 else:
                     row += ". "
             rows.append(row.strip())
         return "\n".join(rows)
+
+    def _ansi_cell(self, pos):
+        if pos == self.agent_pos:
+            return "\033[94mA\033[0m"
+        if pos == self.goal:
+            return "\033[92mG\033[0m"
+        return "."
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
