@@ -74,6 +74,10 @@ class MazeEnv(gym.Env):
             return "\033[94mA\033[0m"
         if pos == self.goal:
             return "\033[92mG\033[0m"
+        if pos in self.traps:
+            return "\033[91mX\033[0m"
+        if pos in self.walls:
+            return "\033[90m#\033[0m"
         return "."
 
     def reset(self, seed=None, options=None):
