@@ -56,17 +56,12 @@ class MazeEnv(gym.Env):
 
     def _render_text(self):
         rows = []
+        border = "+" + "--" * self.size + "+"
+        rows.append(border)
         for r in range(self.size):
-            row = ""
-            for c in range(self.size):
-                pos = (r, c)
-                if pos == self.agent_pos:
-                    row += "\033[94mA\033[0m "
-                elif pos == self.goal:
-                    row += "\033[92mG\033[0m "
-                else:
-                    row += ". "
-            rows.append(row.strip())
+            cells = [self._ansi_cell((r, c)) for c in range(self.size)]
+            rows.append("|" + " ".join(cells) + "|")
+        rows.append(border)
         return "\n".join(rows)
 
     def _ansi_cell(self, pos):
