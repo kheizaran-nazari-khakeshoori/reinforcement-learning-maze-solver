@@ -71,6 +71,16 @@ class MazeEnv(gym.Env):
         rows.append(border)
         return "\n".join(rows)
 
+    def _plot_grid(self):
+        if not _HAS_MPL:
+            return None
+        fig, ax = plt.subplots(figsize=(self.size, self.size))
+        ax.set_xlim(-0.5, self.size - 0.5)
+        ax.set_ylim(-0.5, self.size - 0.5)
+        ax.grid(True)
+        ax.invert_yaxis()
+        return fig, ax
+
     def _ansi_cell(self, pos):
         if pos == self.agent_pos:
             return "\033[94mA\033[0m"
