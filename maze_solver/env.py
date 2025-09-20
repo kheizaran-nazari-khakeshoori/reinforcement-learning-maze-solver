@@ -3,6 +3,13 @@
 import gymnasium as gym
 import numpy as np
 
+try:
+    import matplotlib.pyplot as plt
+
+    _HAS_MPL = True
+except ImportError:
+    _HAS_MPL = False
+
 DEFAULT_SIZE = 5
 
 __all__ = ["MazeEnv", "DEFAULT_SIZE"]
