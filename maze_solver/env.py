@@ -81,6 +81,17 @@ class MazeEnv(gym.Env):
         ax.invert_yaxis()
         return fig, ax
 
+    def _color_for(self, pos):
+        if pos == self.agent_pos:
+            return "blue"
+        if pos == self.goal:
+            return "gold"
+        if pos in self.traps:
+            return "red"
+        if pos in self.walls:
+            return "gray"
+        return "white"
+
     def _ansi_cell(self, pos):
         if pos == self.agent_pos:
             return "\033[94mA\033[0m"
