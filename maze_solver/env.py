@@ -92,6 +92,15 @@ class MazeEnv(gym.Env):
             return "gray"
         return "white"
 
+    def render(self, mode="human"):
+        if mode in ("human", "ansi"):
+            text = self._render_text()
+            print(text)
+            return text
+        if mode == "visual":
+            return self._plot_grid()
+        return self._render_text()
+
     def _ansi_cell(self, pos):
         if pos == self.agent_pos:
             return "\033[94mA\033[0m"
