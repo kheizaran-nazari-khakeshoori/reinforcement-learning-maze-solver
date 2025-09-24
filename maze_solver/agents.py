@@ -8,3 +8,5 @@ class BaseAgent:
         self.q_table=np.zeros((n_states,n_actions))
     def random_action(self):
         return np.random.randint(self.n_actions)
+    def greedy_action(self, state):
+        return int(np.argmax(self.q_table[state]))
