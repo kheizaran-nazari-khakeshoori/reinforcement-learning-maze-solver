@@ -6,3 +6,5 @@ class BaseAgent:
         self.n_states=n_states; self.n_actions=n_actions
         self.alpha=alpha; self.gamma=gamma
         self.q_table=np.zeros((n_states,n_actions))
+    def random_action(self):
+        return np.random.randint(self.n_actions)
