@@ -10,3 +10,7 @@ class BaseAgent:
         return np.random.randint(self.n_actions)
     def greedy_action(self, state):
         return int(np.argmax(self.q_table[state]))
+    def act(self, state, epsilon=0.1):
+        if np.random.rand()<epsilon:
+            return self.random_action()
+        return self.greedy_action(state)
