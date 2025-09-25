@@ -14,3 +14,9 @@ class BaseAgent:
         if np.random.rand()<epsilon:
             return self.random_action()
         return self.greedy_action(state)
+
+class QLearningAgent(BaseAgent):
+    """Q-Learning."""
+    def update(self, s,a,r,ns,done):
+        best=0.0 if done else float(np.max(self.q_table[ns]))
+        self.q_table[s,a]+=self.alpha*(r+self.gamma*best-self.q_table[s,a])
