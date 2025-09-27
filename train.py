@@ -2,7 +2,7 @@
 from maze_solver.env import MazeEnv
 from maze_solver.agents import QLearningAgent
 def run_episode(env, agent, eps=0.1):
-    s,_=env.reset(); total=0; done=False
+    s,_=env.reset(); total=0; steps=0; done=False
     while not done:
         a=agent.act(s, eps)
         ns,r,term,trunc,_=env.step(a)
@@ -11,12 +11,13 @@ def run_episode(env, agent, eps=0.1):
             agent.update(s,a,r,ns,done)
         except TypeError:
             agent.update(s,a,r,ns,a,done)
-        s=ns; total+=r
-    return total
+        s=ns; total+=r; steps+=1
+    return total, steps
 
 def train(agent, env, episodes=100, eps=1.0, decay=0.995, min_eps=0.05):
-    cur=eps; rewards=[]
+    cur=eps; rewards=[]; steps=[]
     for ep in range(episodes):
-        rewards.append(run_episode(env, agent, cur))
+        r,s=run_episode(env, agent, cur)
+        rewards.append(r); steps.append(s)
         cur=max(min_eps, cur*decay)
-    return rewards
+    return rewards, steps
