@@ -13,3 +13,10 @@ def run_episode(env, agent, eps=0.1):
             agent.update(s,a,r,ns,a,done)
         s=ns; total+=r
     return total
+
+def train(agent, env, episodes=100, eps=1.0, decay=0.995, min_eps=0.05):
+    cur=eps; rewards=[]
+    for ep in range(episodes):
+        rewards.append(run_episode(env, agent, cur))
+        cur=max(min_eps, cur*decay)
+    return rewards
