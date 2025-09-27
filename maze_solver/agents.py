@@ -14,6 +14,12 @@ class BaseAgent:
         if np.random.rand()<epsilon:
             return self.random_action()
         return self.greedy_action(state)
+    def save(self, path):
+        np.save(path, self.q_table)
+    def load(self, path):
+        self.q_table=np.load(path)
+    def update(self, s,a,r,ns,done):
+        raise NotImplementedError
 
 class QLearningAgent(BaseAgent):
     """Q-Learning."""
