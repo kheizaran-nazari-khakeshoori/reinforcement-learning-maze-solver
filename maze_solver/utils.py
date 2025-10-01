@@ -18,3 +18,13 @@ def grid_to_walls(grid):
             if grid[r][c]==1:
                 walls.add((r,c))
     return walls
+
+def get_learned_path(env, agent):
+    path=[env.start]; s,_=env.reset()
+    for _ in range(50):
+        a=agent.act(s,0.0)
+        ns,_,term,trunc,_=env.step(a)
+        path.append(env.agent_pos)
+        if term or trunc: break
+        s=ns
+    return path
