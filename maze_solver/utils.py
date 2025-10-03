@@ -28,3 +28,6 @@ def get_learned_path(env, agent):
         if term or trunc: break
         s=ns
     return path
+
+def compare_paths(opt, learned):
+    return {"opt":len(opt) if opt else 0, "learned":len(learned), "extra":len(learned)-len(opt) if opt else 0}
