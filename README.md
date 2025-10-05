@@ -26,3 +26,4 @@ pytest
 - Helpers: `_pos_to_state`, `_state_to_pos`, `_is_terminal`, `DEFAULT_SIZE`
 - Run `pytest tests/test_state_helpers.py tests/test_terminal.py tests/test_wall_validation.py`
 
+## New local 30 commits
