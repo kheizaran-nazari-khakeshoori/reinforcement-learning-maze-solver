@@ -133,3 +133,6 @@ class MazeEnv(gym.Env):
         terminated = self._is_terminal(self.agent_pos)
         return self._pos_to_state(self.agent_pos), reward, terminated, False, {}
 
+
+    def get_state(self):
+        return self._pos_to_state(self.agent_pos)
