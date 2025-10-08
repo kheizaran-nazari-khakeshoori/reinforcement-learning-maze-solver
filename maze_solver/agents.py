@@ -32,3 +32,6 @@ class SarsaAgent(BaseAgent):
     def update(self, s,a,r,ns,na,done):
         nxt=0.0 if done else float(self.q_table[ns,na])
         self.q_table[s,a]+=self.alpha*(r+self.gamma*nxt-self.q_table[s,a])
+
+    def reset(self):
+        self.q_table*=0
