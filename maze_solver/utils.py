@@ -31,3 +31,6 @@ def get_learned_path(env, agent):
 
 def compare_paths(opt, learned):
     return {"opt":len(opt) if opt else 0, "learned":len(learned), "extra":len(learned)-len(opt) if opt else 0}
+
+def manhattan(a,b):
+    return abs(a[0]-b[0])+abs(a[1]-b[1])
