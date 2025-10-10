@@ -22,3 +22,6 @@ def run_compare(episodes=100):
         s_rewards.append(total)
         eps=max(0.05, eps*0.995)
     return q_rewards, s_rewards
+
+def quick_compare():
+    return run_compare(episodes=10)
