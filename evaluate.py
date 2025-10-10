@@ -13,3 +13,6 @@ def evaluate(agent, env, episodes=10, max_steps=50):
                 succ+=1
         total_steps+=steps
     return {"success":succ/episodes, "avg_steps":total_steps/episodes}
+
+def quick_eval(agent, env):
+    return evaluate(agent, env, episodes=5)
