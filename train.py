@@ -30,3 +30,11 @@ if __name__=="__main__":
     env=MazeEnv(size=5)
     agent=QLearningAgent(env.observation_space.n, env.action_space.n)
     train(agent, env, episodes=args.episodes)
+
+def evaluate_greedy(agent, env):
+    s,_=env.reset(); steps=0
+    while steps<50:
+        a=agent.act(s,0.0); ns,_,term,trunc,_=env.step(a)
+        if term or trunc: break
+        s=ns; steps+=1
+    return steps
