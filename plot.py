@@ -8,3 +8,7 @@ def plot_rewards(rewards, save="curve.png"):
     ma=moving_average(rewards, 10)
     plt.plot(range(9, len(rewards)), ma, label="ma")
     plt.legend(); plt.tight_layout(); plt.savefig(save)
+
+def plot_comparison(q,s):
+    import matplotlib.pyplot as plt
+    plt.figure(); plt.plot(q, label="q"); plt.plot(s, label="s"); plt.legend()
