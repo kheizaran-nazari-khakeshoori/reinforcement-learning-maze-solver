@@ -38,3 +38,6 @@ def evaluate_greedy(agent, env):
         if term or trunc: break
         s=ns; steps+=1
     return steps
+
+def train_with_logging(agent, env, episodes=10):
+    return train(agent, env, episodes=episodes)
