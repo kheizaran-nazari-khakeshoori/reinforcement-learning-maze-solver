@@ -34,3 +34,6 @@ def compare_paths(opt, learned):
 
 def manhattan(a,b):
     return abs(a[0]-b[0])+abs(a[1]-b[1])
+
+def path_length(path):
+    return len(path)-1 if path else 0
