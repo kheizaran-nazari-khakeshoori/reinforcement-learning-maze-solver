@@ -35,3 +35,6 @@ class SarsaAgent(BaseAgent):
 
     def reset(self):
         self.q_table*=0
+
+    def best_action(self, state):
+        return self.greedy_action(state)
