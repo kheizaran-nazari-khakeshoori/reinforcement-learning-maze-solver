@@ -12,3 +12,6 @@ def plot_rewards(rewards, save="curve.png"):
 def plot_comparison(q,s):
     import matplotlib.pyplot as plt
     plt.figure(); plt.plot(q, label="q"); plt.plot(s, label="s"); plt.legend()
+
+def save_curve(rewards, path="tmp.png"):
+    plot_rewards(rewards, save=path)
