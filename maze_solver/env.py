@@ -139,3 +139,6 @@ class MazeEnv(gym.Env):
 
     def distance_to_goal(self):
         return abs(self.agent_pos[0]-self.goal[0])+abs(self.agent_pos[1]-self.goal[1])
+
+    def render_text(self):
+        return self._render_text()
