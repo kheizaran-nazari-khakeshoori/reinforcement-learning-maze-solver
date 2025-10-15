@@ -25,3 +25,7 @@ def run_compare(episodes=100):
 
 def quick_compare():
     return run_compare(episodes=10)
+
+def compare_lengths():
+    from maze_solver.utils import bfs
+    return bfs(3, [], (0,0), (2,2))
