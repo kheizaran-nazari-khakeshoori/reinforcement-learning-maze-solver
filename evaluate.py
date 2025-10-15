@@ -16,3 +16,6 @@ def evaluate(agent, env, episodes=10, max_steps=50):
 
 def quick_eval(agent, env):
     return evaluate(agent, env, episodes=5)
+
+def success_rate(agent, env):
+    return evaluate(agent, env)["success"]
