@@ -29,3 +29,5 @@ pytest
 ## New local 30 commits
 # Local 30b-1
 ## Changelog
+
+- Local 30b batch 2
