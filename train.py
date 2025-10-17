@@ -41,3 +41,7 @@ def evaluate_greedy(agent, env):
 
 def train_with_logging(agent, env, episodes=10):
     return train(agent, env, episodes=episodes)
+
+def get_rewards(agent, env):
+    r,_=run_episode(env, agent, 0.1)
+    return r
