@@ -38,3 +38,6 @@ class SarsaAgent(BaseAgent):
 
     def best_action(self, state):
         return self.greedy_action(state)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(states={self.n_states})"
