@@ -16,3 +16,4 @@ def plot_comparison(q,s):
 def save_curve(rewards, path="tmp.png"):
     plot_rewards(rewards, save=path)
 def plot_06(): pass
+def plot_14(): pass
