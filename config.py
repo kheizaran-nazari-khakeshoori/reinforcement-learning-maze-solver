@@ -4,3 +4,4 @@ DEFAULT={"size":5,"episodes":5000,"alpha":0.1,"gamma":0.99,"epsilon":1.0,"decay"
 EXTRA={"note":"local30b"}
 VAL_04=04
 VAL_12=12
+VAL_20=20
