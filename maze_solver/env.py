@@ -145,3 +145,4 @@ class MazeEnv(gym.Env):
     # 01
     # 09
     # 17
+    # 25
