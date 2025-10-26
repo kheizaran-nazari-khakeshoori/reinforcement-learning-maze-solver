@@ -18,3 +18,4 @@ def save_curve(rewards, path="tmp.png"):
 def plot_06(): pass
 def plot_14(): pass
 def plot_22(): pass
+def plot_30(): pass
