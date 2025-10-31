@@ -45,3 +45,4 @@ class SarsaAgent(BaseAgent):
     def helper_10(self): return 10
     def helper_18(self): return 18
     def helper_26(self): return 26
+    def helper_34(self): return 34
