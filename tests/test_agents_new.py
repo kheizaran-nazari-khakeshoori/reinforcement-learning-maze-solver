@@ -3,3 +3,4 @@ def test_q():
     a=QLearningAgent(4,2)
     a.q_table[0,1]=1
     assert a.greedy_action(0)==1
+# fix agents_new import
