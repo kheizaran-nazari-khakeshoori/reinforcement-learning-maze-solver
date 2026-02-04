@@ -18,6 +18,12 @@ class BaseAgent:
         np.save(path, self.q_table)
     def load(self, path):
         self.q_table=np.load(path)
+    def reset(self):
+        self.q_table*=0
+    def best_action(self, state):
+        return self.greedy_action(state)
+    def __repr__(self):
+        return f"{self.__class__.__name__}(states={self.n_states})"
     def update(self, s,a,r,ns,done):
         raise NotImplementedError
 
@@ -32,17 +38,3 @@ class SarsaAgent(BaseAgent):
     def update(self, s,a,r,ns,na,done):
         nxt=0.0 if done else float(self.q_table[ns,na])
         self.q_table[s,a]+=self.alpha*(r+self.gamma*nxt-self.q_table[s,a])
-
-    def reset(self):
-        self.q_table*=0
-
-    def best_action(self, state):
-        return self.greedy_action(state)
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}(states={self.n_states})"
-    def helper_02(self): return 02
-    def helper_10(self): return 10
-    def helper_18(self): return 18
-    def helper_26(self): return 26
-    def helper_34(self): return 34
