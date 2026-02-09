@@ -25,5 +25,19 @@ class MazeGUI:
         r,c=self.env.agent_pos
         x=c*self.cell+self.cell//2; y=r*self.cell+self.cell//2
         pygame.draw.circle(self.screen, COLORS["agent"], (x,y), self.cell//3)
+    def handle_events(self):
+        for e in pygame.event.get():
+            if e.type==pygame.QUIT:
+                return False
+        return True
+    def loop_once(self):
+        if not self.handle_events():
+            self.close()
+            return False
+        self.screen.fill((255,255,255))
+        self.draw_grid(); self.draw_agent()
+        pygame.display.flip()
+        self.clock.tick(30)
+        return True
     def close(self):
         pygame.quit()
