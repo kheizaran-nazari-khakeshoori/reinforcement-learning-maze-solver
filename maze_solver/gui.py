@@ -21,5 +21,9 @@ class MazeGUI:
                 rect=pygame.Rect(c*self.cell, r*self.cell, self.cell, self.cell)
                 pygame.draw.rect(self.screen, self._color((r,c)), rect)
                 pygame.draw.rect(self.screen, (0,0,0), rect, 1)
+    def draw_agent(self):
+        r,c=self.env.agent_pos
+        x=c*self.cell+self.cell//2; y=r*self.cell+self.cell//2
+        pygame.draw.circle(self.screen, COLORS["agent"], (x,y), self.cell//3)
     def close(self):
         pygame.quit()
