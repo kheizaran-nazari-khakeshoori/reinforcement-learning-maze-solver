@@ -29,6 +29,11 @@ class MazeGUI:
         for e in pygame.event.get():
             if e.type==pygame.QUIT:
                 return False
+            if e.type==pygame.KEYDOWN:
+                if e.key==pygame.K_r:
+                    self.env.reset()
+                if e.key==pygame.K_SPACE:
+                    self.env.step(self.env.action_space.sample())
         return True
     def loop_once(self):
         if not self.handle_events():
