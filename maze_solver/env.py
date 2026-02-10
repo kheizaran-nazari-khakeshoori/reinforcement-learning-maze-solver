@@ -2,6 +2,10 @@
 
 import gymnasium as gym
 import numpy as np
+try:
+    from maze_solver.gui import MazeGUI
+    _HAS_GUI=True
+except: _HAS_GUI=False
 
 try:
     import matplotlib.pyplot as plt
@@ -93,6 +97,10 @@ class MazeEnv(gym.Env):
         return "white"
 
     def render(self, mode="human"):
+        if mode=="pygame" and _HAS_GUI:
+            if not hasattr(self, "gui") or self.gui is None:
+                self.gui=MazeGUI(self)
+            return self.gui.loop_once()
         if mode in ("human", "ansi"):
             text = self._render_text()
             print(text)
