@@ -39,5 +39,11 @@ class MazeGUI:
         pygame.display.flip()
         self.clock.tick(30)
         return True
+    def animate_step(self, old, new, steps=6):
+        for i in range(steps):
+            t=(i+1)/steps
+            r=int(old[0]+(new[0]-old[0])*t); c=int(old[1]+(new[1]-old[1])*t)
+            self.env.agent_pos=(r,c)
+            self.loop_once()
     def close(self):
         pygame.quit()
