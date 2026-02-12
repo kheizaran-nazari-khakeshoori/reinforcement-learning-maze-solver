@@ -39,19 +39,21 @@ class MazeGUI:
                     self.env.step(self.env.action_space.sample())
         return True
     def loop_once(self):
-        if not self.handle_events():
-            self.close()
-            return False
         self.screen.fill((255,255,255))
         self.draw_grid(); self.draw_agent()
         pygame.display.flip()
-        self.clock.tick(30)
-        return True
+        self.clock.tick(60)
+        return self.handle_events()
     def animate_step(self, old, new, steps=6):
         for i in range(steps):
             t=(i+1)/steps
             r=int(old[0]+(new[0]-old[0])*t); c=int(old[1]+(new[1]-old[1])*t)
             self.env.agent_pos=(r,c)
-            self.loop_once()
+            self.screen.fill((255,255,255))
+            self.draw_grid(); self.draw_agent()
+            pygame.display.flip()
+            self.clock.tick(60)
+            if not self.handle_events():
+                break
     def close(self):
         pygame.quit()
