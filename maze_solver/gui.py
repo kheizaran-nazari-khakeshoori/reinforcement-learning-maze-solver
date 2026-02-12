@@ -2,11 +2,14 @@
 import pygame
 COLORS={"wall":(80,80,80),"trap":(220,50,50),"goal":(255,215,0),"agent":(50,100,255),"start":(150,255,150)}
 class MazeGUI:
-    def __init__(self, env, cell=40):
+    def __init__(self, env, cell=None):
         self.env=env
+        if cell is None:
+            cell=max(20, 600//env.size)
         self.cell=cell
         pygame.init()
-        self.screen=pygame.display.set_mode((env.size*cell, env.size*cell))
+        w=env.size*cell; h=env.size*cell
+        self.screen=pygame.display.set_mode((w, h))
         pygame.display.set_caption("Maze Solver")
         self.clock=pygame.time.Clock()
     def _color(self, pos):
