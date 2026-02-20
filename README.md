@@ -32,20 +32,18 @@
         └──► PyGame GUI — gui.py:4 + record.py
         │
         ▼
-[Metrics & Video — maze.mp4]
+[Metrics & GIF — assets/*.gif]
 ```
 
 ### Agent / System Execution Demo
 
-**Programmatic capture (600×600, 10 FPS, mpeg4) — trained 2000 episodes, greedy rollout:**
-<video src="assets/maze.mp4" controls width="420"></video>
+**Programmatic capture — trained 2000 episodes, greedy rollout (944×944 GIF, 12.5 FPS):**
+![Programmatic Demo](assets/Adobe%20Express%20-%20maze.gif)
+*`assets/Adobe Express - maze.gif` — 146KB, 944×944, 1.28s, 12.5 FPS*
 
-*If video does not preview on GitHub, [download assets/maze.mp4](assets/maze.mp4)*
-
-**Full screen-recorded session — final answer (16s, 608×640, h264):**
-<video src="assets/Screencast%20From%202026-09-08%2015-13-47.mp4" controls width="600"></video>
-
-*Alternative link: [assets/Screencast From 2026-09-08 15-13-47.mp4](assets/Screencast%20From%202026-09-08%2015-13-47.mp4)*
+**Full screen-recorded session — final answer (608×640 GIF, 12.5 FPS, 16.25s):**
+![Final Demo — Screen Recorded](assets/Screencast%20From%202026-09-08%2015-13-47.gif)
+*`assets/Screencast From 2026-09-08 15-13-47.gif` — 255KB, 608×640, 16.25s, 12.5 FPS — **final answer***
 
 ### Example Output
 ```
@@ -87,7 +85,7 @@ It showcases concepts relevant to modern AI engineering:
 
 ## Overview
 
-A `5×5` (configurable `N×N`) MazeEnv starts at `(0,0)` and must reach `(N-1,N-1)`. Walls block movement, traps terminate with `-1`. Agents learn a Q-table `Q(s,a)` via TD updates. After `~2000–5000` episodes with epsilon decay `1.0 → 0.05 (0.995)`, the greedy policy converges to the BFS-optimal 8-step path on an empty grid with `100%` success. PyGame GUI and `record.py` export the rollout to `assets/maze.mp4` for portfolio/demo.
+A `5×5` (configurable `N×N`) MazeEnv starts at `(0,0)` and must reach `(N-1,N-1)`. Walls block movement, traps terminate with `-1`. Agents learn a Q-table `Q(s,a)` via TD updates. After `~2000–5000` episodes with epsilon decay `1.0 → 0.05 (0.995)`, the greedy policy converges to the BFS-optimal 8-step path on an empty grid with `100%` success. PyGame GUI and `record.py` export the rollout to GIF via `ffmpeg` for portfolio/demo (`assets/Adobe Express - maze.gif` and `assets/Screencast From 2026-09-08 15-13-47.gif`).
 
 See [Demo](#demo) for commands and [Architecture](#architecture) for data flow.
 
@@ -147,12 +145,16 @@ python3.12 -m pip install --user -r requirements.txt  # gymnasium, numpy, matplo
 python3.12 train.py --episodes 5000
 python train.py --episodes 100   # quick test (uses system python if pygame not needed)
 
-# 3. Record video (programmatic capture → assets/maze.mp4, also saved as maze.mp4 in cwd)
+# 3. Record video/GIF (programmatic capture → maze.mp4, convert to GIF for README)
 python3.12 record.py
-ls -lh maze.mp4 assets/maze.mp4
+ls -lh maze.mp4
+# Convert to GIF for GitHub preview:
+ffmpeg -i maze.mp4 -vf "fps=12.5,scale=600:-1:flags=lanczos" assets/maze.gif
+# Or use provided GIFs: assets/Adobe Express - maze.gif, assets/Screencast From 2026-09-08 15-13-47.gif
 ffplay maze.mp4  # or vlc / mpv
 
-# 4. Screen-recorded final demo is at assets/Screencast From 2026-09-08 15-13-47.mp4
+# 4. Final answer GIF is at assets/Screencast From 2026-09-08 15-13-47.gif (screen-recorded)
+#    Programmatic GIF is at assets/Adobe Express - maze.gif
 ```
 
 ### Direct Tool / Model / API Usage
@@ -202,7 +204,7 @@ See *Example Output* under System Demonstration. Full verbose ffmpeg log is writ
 - Epsilon-greedy exploration with exponential decay and greedy evaluation
 - BFS optimal path baseline and path comparison utilities
 - Three renderers: terminal ANSI, Matplotlib, PyGame GUI
-- Automated video export (`pygame.surfarray` → `ffmpeg` pipe, `mpeg4` for Fedora)
+- Automated GIF/video export (`pygame.surfarray` → `ffmpeg` pipe, `mpeg4` → GIF for README)
 - Training curves (`plot.py:moving_average`, `plot_rewards`)
 - Q vs SARSA head-to-head comparison (`compare.py`)
 
@@ -223,7 +225,7 @@ See *Example Output* under System Demonstration. Full verbose ffmpeg log is writ
 | QLearning | 500 | 0.945 (last 50) | ~8.4 | ~0.96 | +0.4 |
 | Random policy | 0 | -3.0 | >50 | 0.05 | +42 |
 
-**Interpretation:** Both TD methods converge to near-optimal within 500 episodes; Q-Learning slightly lower variance off-policy, SARSA more conservative near traps. After 2000–5000 episodes the greedy policy is optimal on empty grid and within 1 step on obstructed grids. Training cost is <1s on CPU (493 LOC total). Video `assets/maze.mp4` shows 13 frames / 1.3s at 10 FPS capturing the optimal rollout.
+**Interpretation:** Both TD methods converge to near-optimal within 500 episodes; Q-Learning slightly lower variance off-policy, SARSA more conservative near traps. After 2000–5000 episodes the greedy policy is optimal on empty grid and within 1 step on obstructed grids. Training cost is <1s on CPU (493 LOC total). GIF `assets/Adobe Express - maze.gif` (944×944, 1.28s) captures the optimal rollout; final screen-recorded GIF `assets/Screencast From 2026-09-08 15-13-47.gif` (608×640, 16.25s) shows the full interactive session.
 
 ---
 
@@ -261,7 +263,7 @@ The app is a layered RL system: Gymnasium environment exposes MDP, agents implem
       └─────┼────────────┘
             ▼
 ┌───────────────────────┐
-│  Metrics + Video      │  success, avg_steps, maze.mp4
+│  Metrics + GIF        │  success, avg_steps, assets/*.gif
 └───────────────────────┘
 ```
 
@@ -372,9 +374,9 @@ Reliable video on stock Fedora without extra `rpmfusion` codec install.
 ## Repository Structure
 ```
 .
-├── assets/                   # video demos
-│   ├── maze.mp4              # programmatic 600×600 mpeg4 (1.3s, 10fps) — record.py
-│   └── Screencast From 2026-09-08 15-13-47.mp4  # screen-recorded final answer (608×640, 16s, h264)
+├── assets/                   # GIF demos (GitHub preview)
+│   ├── Adobe Express - maze.gif                # programmatic 944×944 GIF (146KB, 1.28s) — from record.py
+│   └── Screencast From 2026-09-08 15-13-47.gif  # screen-recorded final answer (608×640, 255KB, 16.25s)
 ├── maze_solver/              # core package
 │   ├── env.py                # MazeEnv (Gymnasium), render modes
 │   ├── agents.py             # BaseAgent, QLearningAgent, SarsaAgent
@@ -465,7 +467,7 @@ python3.12 record.py && ffprobe maze.mp4
 **Expected Outcome**
 - All 27 pytest pass
 - `evaluate` success ≥0.95 after 2000 episodes on empty 5×5 (optimal 8 steps)
-- `maze.mp4` 600×600 ~80–90KB, playable via `ffplay`
+- GIFs in `assets/` preview directly on GitHub (e.g., `Adobe Express - maze.gif` 944×944, `Screencast ...15-13-47.gif` 608×640)
 
 ---
 
