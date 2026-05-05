@@ -3,17 +3,15 @@
 import argparse
 from typing import Tuple, List
 
-from maze_solver.agents import BaseAgent, QLearningAgent
+from maze_solver.agents import BaseAgent, QLearningAgent, SarsaAgent
 from maze_solver.env import MazeEnv
 
 
 def run_episode(env: MazeEnv, agent: BaseAgent, epsilon: float = 0.1) -> Tuple[float, int]:
     """Run a single episode with epsilon-greedy policy.
 
-    Args:
-        env: Maze environment.
-        agent: Agent implementing act() and update().
-        epsilon: Exploration rate.
+    Handles both Q-Learning (off-policy) and SARSA (on-policy) via unified
+    update signature: update(s,a,r,ns,done,next_action).
 
     Returns:
         (total_reward, steps) for the episode.
@@ -23,19 +21,33 @@ def run_episode(env: MazeEnv, agent: BaseAgent, epsilon: float = 0.1) -> Tuple[f
     steps = 0
     done = False
 
+    # SARSA needs to track next_action; Q-Learning ignores it.
+    is_sarsa = isinstance(agent, SarsaAgent)
+    action = agent.act(state, epsilon) if is_sarsa else None
+
     while not done:
-        action = agent.act(state, epsilon)
-        next_state, reward, terminated, truncated, _ = env.step(action)
+        if is_sarsa:
+            # On-policy: action already selected
+            current_action = action  # type: ignore
+        else:
+            current_action = agent.act(state, epsilon)
+
+        next_state, reward, terminated, truncated, _ = env.step(current_action)
         done = terminated or truncated
-        # Unified update interface: Q-Learning ignores next_action, SARSA uses it.
-        # Keep backward-compatible try/except until agents are unified (next commit).
-        try:
-            agent.update(state, action, reward, next_state, done)
-        except TypeError:
-            agent.update(state, action, reward, next_state, action, done)
+
+        if is_sarsa:
+            next_action = agent.act(next_state, epsilon) if not done else None
+            agent.update(state, current_action, reward, next_state, done, next_action)
+            action = next_action  # type: ignore
+        else:
+            agent.update(state, current_action, reward, next_state, done)
+
         state = next_state
         total_reward += reward
         steps += 1
+        # Safety cap
+        if steps >= 200:
+            break
 
     return total_reward, steps
 
@@ -49,14 +61,6 @@ def train(
     min_eps: float = 0.05,
 ) -> Tuple[List[float], List[int]]:
     """Train agent with epsilon decay.
-
-    Args:
-        agent: RL agent.
-        env: Environment.
-        episodes: Number of episodes.
-        epsilon: Initial epsilon.
-        decay: Epsilon decay per episode.
-        min_eps: Floor for epsilon.
 
     Returns:
         (rewards, steps) histories.

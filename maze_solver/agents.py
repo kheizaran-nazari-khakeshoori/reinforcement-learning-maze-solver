@@ -1,40 +1,104 @@
-"""Agents module."""
+"""Tabular agents: Q-Learning (off-policy) and SARSA (on-policy)."""
+
+from typing import Optional
+
 import numpy as np
+
+
 class BaseAgent:
-    """Base."""
-    def __init__(self, n_states, n_actions, alpha=0.1, gamma=0.99):
-        self.n_states=n_states; self.n_actions=n_actions
-        self.alpha=alpha; self.gamma=gamma
-        self.q_table=np.zeros((n_states,n_actions))
-    def random_action(self):
-        return np.random.randint(self.n_actions)
-    def greedy_action(self, state):
+    """Base tabular agent with epsilon-greedy policy."""
+
+    def __init__(self, n_states: int, n_actions: int, alpha: float = 0.1, gamma: float = 0.99):
+        self.n_states = n_states
+        self.n_actions = n_actions
+        self.alpha = alpha
+        self.gamma = gamma
+        self.q_table = np.zeros((n_states, n_actions))
+
+    def random_action(self) -> int:
+        return int(np.random.randint(self.n_actions))
+
+    def greedy_action(self, state: int) -> int:
         return int(np.argmax(self.q_table[state]))
-    def act(self, state, epsilon=0.1):
-        if np.random.rand()<epsilon:
+
+    def act(self, state: int, epsilon: float = 0.1) -> int:
+        if np.random.rand() < epsilon:
             return self.random_action()
         return self.greedy_action(state)
-    def save(self, path):
+
+    def save(self, path: str) -> None:
         np.save(path, self.q_table)
-    def load(self, path):
-        self.q_table=np.load(path)
-    def reset(self):
-        self.q_table*=0
-    def best_action(self, state):
+
+    def load(self, path: str) -> None:
+        self.q_table = np.load(path)
+
+    def reset(self) -> None:
+        self.q_table *= 0
+
+    def best_action(self, state: int) -> int:
         return self.greedy_action(state)
-    def __repr__(self):
-        return f"{self.__class__.__name__}(states={self.n_states})"
-    def update(self, s,a,r,ns,done):
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(states={self.n_states}, actions={self.n_actions})"
+
+    def update(
+        self,
+        state: int,
+        action: int,
+        reward: float,
+        next_state: int,
+        done: bool,
+        next_action: Optional[int] = None,
+    ) -> None:
+        """Unified update interface.
+
+        Args:
+            state: Current state.
+            action: Action taken.
+            reward: Reward received.
+            next_state: Next state.
+            done: Episode terminated.
+            next_action: Next action (used by SARSA, ignored by Q-Learning).
+        """
         raise NotImplementedError
 
+
 class QLearningAgent(BaseAgent):
-    """Q-Learning."""
-    def update(self, s,a,r,ns,done):
-        best=0.0 if done else float(np.max(self.q_table[ns]))
-        self.q_table[s,a]+=self.alpha*(r+self.gamma*best-self.q_table[s,a])
+    """Q-Learning: off-policy TD update r + gamma * max_a Q(s',a)."""
+
+    def update(
+        self,
+        state: int,
+        action: int,
+        reward: float,
+        next_state: int,
+        done: bool,
+        next_action: Optional[int] = None,
+    ) -> None:
+        best = 0.0 if done else float(np.max(self.q_table[next_state]))
+        td_target = reward + self.gamma * best
+        td_error = td_target - self.q_table[state, action]
+        self.q_table[state, action] += self.alpha * td_error
+
 
 class SarsaAgent(BaseAgent):
-    """SARSA."""
-    def update(self, s,a,r,ns,na,done):
-        nxt=0.0 if done else float(self.q_table[ns,na])
-        self.q_table[s,a]+=self.alpha*(r+self.gamma*nxt-self.q_table[s,a])
+    """SARSA: on-policy TD update r + gamma * Q(s',a')."""
+
+    def update(
+        self,
+        state: int,
+        action: int,
+        reward: float,
+        next_state: int,
+        done: bool,
+        next_action: Optional[int] = None,
+    ) -> None:
+        if done:
+            nxt = 0.0
+        else:
+            if next_action is None:
+                raise ValueError("SARSA requires next_action when not done")
+            nxt = float(self.q_table[next_state, next_action])
+        td_target = reward + self.gamma * nxt
+        td_error = td_target - self.q_table[state, action]
+        self.q_table[state, action] += self.alpha * td_error
