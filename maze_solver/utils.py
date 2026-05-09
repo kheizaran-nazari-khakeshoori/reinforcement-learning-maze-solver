@@ -1,44 +1,65 @@
-"""Utils."""
+"""Path utilities: BFS optimal baseline and helpers."""
+
 from collections import deque
-def bfs(size, walls, start, goal):
-    q=deque([(start,[start])]); vis={start}
-    while q:
-        pos,path=q.popleft()
-        if pos==goal: return path
-        for dr,dc in [(-1,0),(0,1),(1,0),(0,-1)]:
-            nxt=(pos[0]+dr,pos[1]+dc)
-            if 0<=nxt[0]<size and 0<=nxt[1]<size and nxt not in walls and nxt not in vis:
-                vis.add(nxt); q.append((nxt, path+[nxt]))
+from typing import List, Tuple, Set, Optional, Dict
+
+
+def bfs(
+    size: int,
+    walls: Set[Tuple[int, int]],
+    start: Tuple[int, int],
+    goal: Tuple[int, int],
+) -> Optional[List[Tuple[int, int]]]:
+    """Breadth-first search for shortest path."""
+    queue = deque([(start, [start])])
+    visited = {start}
+
+    while queue:
+        pos, path = queue.popleft()
+        if pos == goal:
+            return path
+        for dr, dc in [(-1, 0), (0, 1), (1, 0), (0, -1)]:
+            nxt = (pos[0] + dr, pos[1] + dc)
+            if 0 <= nxt[0] < size and 0 <= nxt[1] < size and nxt not in walls and nxt not in visited:
+                visited.add(nxt)
+                queue.append((nxt, path + [nxt]))
     return None
 
-def grid_to_walls(grid):
-    walls=set()
+
+def grid_to_walls(grid: List[List[int]]) -> Set[Tuple[int, int]]:
+    walls: Set[Tuple[int, int]] = set()
     for r in range(len(grid)):
         for c in range(len(grid[0])):
-            if grid[r][c]==1:
-                walls.add((r,c))
+            if grid[r][c] == 1:
+                walls.add((r, c))
     return walls
 
-def get_learned_path(env, agent):
-    path=[env.start]; s,_=env.reset()
+
+def get_learned_path(env, agent) -> List[Tuple[int, int]]:
+    """Greedy rollout from start using agent's policy."""
+    path = [env.start]
+    state, _ = env.reset()
     for _ in range(50):
-        a=agent.act(s,0.0)
-        ns,_,term,trunc,_=env.step(a)
+        action = agent.act(state, 0.0)
+        next_state, _, terminated, truncated, _ = env.step(action)
         path.append(env.agent_pos)
-        if term or trunc: break
-        s=ns
+        if terminated or truncated:
+            break
+        state = next_state
     return path
 
-def compare_paths(opt, learned):
-    return {"opt":len(opt) if opt else 0, "learned":len(learned), "extra":len(learned)-len(opt) if opt else 0}
 
-def manhattan(a,b):
-    return abs(a[0]-b[0])+abs(a[1]-b[1])
+def compare_paths(opt, learned) -> Dict[str, int]:
+    return {
+        "opt": len(opt) if opt else 0,
+        "learned": len(learned),
+        "extra": len(learned) - len(opt) if opt else 0,
+    }
 
-def path_length(path):
-    return len(path)-1 if path else 0
-def util_05(): return 5
-def util_13(): return 13
-def util_21(): return 21
-def util_29(): return 29
-def util_37(): return 37
+
+def manhattan(a: Tuple[int, int], b: Tuple[int, int]) -> int:
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+
+def path_length(path) -> int:
+    return len(path) - 1 if path else 0
