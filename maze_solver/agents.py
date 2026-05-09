@@ -75,6 +75,10 @@ class QLearningAgent(BaseAgent):
         done: bool,
         next_action: Optional[int] = None,
     ) -> None:
+        # Backward compatibility: old shim called update(s,a,r,ns,a,done) with swapped order.
+        # Detect swapped args where done is int and next_action is bool.
+        if not isinstance(done, (bool, np.bool_)) and isinstance(next_action, (bool, np.bool_)):
+            done, next_action = bool(next_action), int(done)  # type: ignore
         best = 0.0 if done else float(np.max(self.q_table[next_state]))
         td_target = reward + self.gamma * best
         td_error = td_target - self.q_table[state, action]
@@ -93,6 +97,10 @@ class SarsaAgent(BaseAgent):
         done: bool,
         next_action: Optional[int] = None,
     ) -> None:
+        # Backward compatibility: old code used update(s,a,r,ns,na,done) (na before done).
+        # New unified interface is update(s,a,r,ns,done,na). Support both.
+        if not isinstance(done, (bool, np.bool_)) and isinstance(next_action, (bool, np.bool_)):
+            done, next_action = bool(next_action), int(done)  # type: ignore
         if done:
             nxt = 0.0
         else:
