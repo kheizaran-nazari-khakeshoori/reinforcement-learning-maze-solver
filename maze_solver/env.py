@@ -150,8 +150,3 @@ class MazeEnv(gym.Env):
 
     def render_text(self):
         return self._render_text()
-    # 01
-    # 09
-    # 17
-    # 25
-    # 33
