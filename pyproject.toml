@@ -27,6 +27,15 @@ dependencies = [
     "pygame>=2.5.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov",
+]
+gui = [
+    "pygame>=2.5.0",
+]
+
 [project.urls]
 Homepage = "https://github.com/kheizaran-nazari-khakeshoori/reinforcement-learning-maze-solver"
 Repository = "https://github.com/kheizaran-nazari-khakeshoori/reinforcement-learning-maze-solver"
