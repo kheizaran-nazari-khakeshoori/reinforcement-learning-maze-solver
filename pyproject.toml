@@ -11,12 +11,27 @@ authors = [
 maintainers = [
     {name = "Kheizaran Nazari Khakeshoori", email = "kheizarannazarikhakeshoori@gmail.com"}
 ]
+keywords = ["reinforcement-learning", "q-learning", "sarsa", "gridworld", "gymnasium", "maze-solver"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
 dependencies = [
     "gymnasium>=1.0.0",
     "numpy>=1.24.0",
     "matplotlib>=3.7.0",
     "pygame>=2.5.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/kheizaran-nazari-khakeshoori/reinforcement-learning-maze-solver"
+Repository = "https://github.com/kheizaran-nazari-khakeshoori/reinforcement-learning-maze-solver"
+Issues = "https://github.com/kheizaran-nazari-khakeshoori/reinforcement-learning-maze-solver/issues"
+Changelog = "https://github.com/kheizaran-nazari-khakeshoori/reinforcement-learning-maze-solver/blob/main/README.md"
 
 [build-system]
 requires = ["setuptools>=61"]
