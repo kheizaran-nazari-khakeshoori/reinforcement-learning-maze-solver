@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Gridworld / Maze Solver with Q-Learning and SARSA"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "Kheizaran Nazari Khakeshoori", email = "kheizarannazarikhakeshoori@gmail.com"}
 ]
@@ -14,7 +14,6 @@ maintainers = [
 keywords = ["reinforcement-learning", "q-learning", "sarsa", "gridworld", "gymnasium", "maze-solver"]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
@@ -45,6 +44,9 @@ Changelog = "https://github.com/kheizaran-nazari-khakeshoori/reinforcement-learn
 [build-system]
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["maze_solver*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
