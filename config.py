@@ -10,7 +10,8 @@ DEFAULT: Dict[str, Union[int, float]] = {
     "epsilon": 1.0,
     "decay": 0.995,
     "min_eps": 0.05,
+    "seed": 0,
 }
 
-# Optional environment presets (walls/traps) can be defined here as needed.
-# Example: ENV_PRESETS = {"empty": {"walls": [], "traps": []}}
+# Reproducibility: seed controls numpy/random and env seeding via train.py --seed
+# All CLI defaults are taken from DEFAULT so config is single source of truth.
