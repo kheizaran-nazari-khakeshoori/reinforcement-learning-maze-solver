@@ -25,11 +25,12 @@ class MazeEnv(gym.Env):
     Grid size N x N, start at (0,0), goal at (N-1,N-1).
     Supports walls, traps, and discrete actions 0:up,1:right,2:down,3:left.
     Observation is single Discrete state index = r*N + c.
+    Seed handling uses Gymnasium's seeding via super().reset(seed=seed).
     """
 
     metadata = {"render_modes": ["human"]}
 
-    def __init__(self, size=DEFAULT_SIZE, walls=None, traps=None):
+    def __init__(self, size=DEFAULT_SIZE, walls=None, traps=None, seed=None):
         super().__init__()
         self.size = size
         self.start = (0, 0)
@@ -47,6 +48,9 @@ class MazeEnv(gym.Env):
         self.grid[self.goal] = 3
         self.action_space = gym.spaces.Discrete(4)
         self.observation_space = gym.spaces.Discrete(size * size)
+        # Seed action/observation spaces for reproducibility
+        if seed is not None:
+            self.reset(seed=seed)
 
     def _pos_to_state(self, pos):
         return pos[0] * self.size + pos[1]
@@ -122,6 +126,7 @@ class MazeEnv(gym.Env):
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
+        # Gymnasium handles seeding of self.np_random and spaces
         self.agent_pos = self.start
         return self._pos_to_state(self.agent_pos), {}
 
