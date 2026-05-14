@@ -1,13 +1,25 @@
 """Training loop for Gridworld agents."""
 
 import argparse
-from typing import Tuple, List
+import random
+from typing import Tuple, List, Optional
 
+import numpy as np
+
+from config import DEFAULT
 from maze_solver.agents import BaseAgent, QLearningAgent, SarsaAgent
 from maze_solver.env import MazeEnv
 
 
-def run_episode(env: MazeEnv, agent: BaseAgent, epsilon: float = 0.1) -> Tuple[float, int]:
+def set_seed(seed: Optional[int]) -> None:
+    """Set global RNG seeds for reproducibility."""
+    if seed is None:
+        return
+    random.seed(seed)
+    np.random.seed(seed)
+
+
+def run_episode(env: MazeEnv, agent: BaseAgent, epsilon: float = 0.1, seed: Optional[int] = None) -> Tuple[float, int]:
     """Run a single episode with epsilon-greedy policy.
 
     Handles both Q-Learning (off-policy) and SARSA (on-policy) via unified
@@ -16,7 +28,7 @@ def run_episode(env: MazeEnv, agent: BaseAgent, epsilon: float = 0.1) -> Tuple[f
     Returns:
         (total_reward, steps) for the episode.
     """
-    state, _ = env.reset()
+    state, _ = env.reset(seed=seed)
     total_reward = 0.0
     steps = 0
     done = False
@@ -27,7 +39,6 @@ def run_episode(env: MazeEnv, agent: BaseAgent, epsilon: float = 0.1) -> Tuple[f
 
     while not done:
         if is_sarsa:
-            # On-policy: action already selected
             current_action = action  # type: ignore
         else:
             current_action = agent.act(state, epsilon)
@@ -45,7 +56,6 @@ def run_episode(env: MazeEnv, agent: BaseAgent, epsilon: float = 0.1) -> Tuple[f
         state = next_state
         total_reward += reward
         steps += 1
-        # Safety cap
         if steps >= 200:
             break
 
@@ -59,18 +69,35 @@ def train(
     epsilon: float = 1.0,
     decay: float = 0.995,
     min_eps: float = 0.05,
+    seed: Optional[int] = None,
 ) -> Tuple[List[float], List[int]]:
     """Train agent with epsilon decay.
+
+    Args:
+        agent: RL agent.
+        env: Environment.
+        episodes: Number of episodes.
+        epsilon: Initial epsilon.
+        decay: Epsilon decay per episode.
+        min_eps: Floor for epsilon.
+        seed: Random seed for reproducibility (sets numpy/random and env).
 
     Returns:
         (rewards, steps) histories.
     """
+    set_seed(seed)
+    # Seed env once at start; per-episode seed derived deterministically if needed
+    if seed is not None:
+        env.reset(seed=seed)
+
     cur_eps = epsilon
     rewards: List[float] = []
     steps_hist: List[int] = []
 
-    for _ in range(episodes):
-        reward, steps = run_episode(env, agent, cur_eps)
+    for ep in range(episodes):
+        # Derive per-episode seed for determinism if base seed given
+        ep_seed = seed + ep if seed is not None else None
+        reward, steps = run_episode(env, agent, cur_eps, seed=ep_seed)
         rewards.append(reward)
         steps_hist.append(steps)
         cur_eps = max(min_eps, cur_eps * decay)
@@ -78,9 +105,9 @@ def train(
     return rewards, steps_hist
 
 
-def evaluate_greedy(agent: BaseAgent, env: MazeEnv, max_steps: int = 50) -> int:
+def evaluate_greedy(agent: BaseAgent, env: MazeEnv, max_steps: int = 50, seed: Optional[int] = None) -> int:
     """Run greedy rollout and return steps to termination."""
-    state, _ = env.reset()
+    state, _ = env.reset(seed=seed)
     steps = 0
     while steps < max_steps:
         action = agent.act(state, 0.0)
@@ -92,22 +119,31 @@ def evaluate_greedy(agent: BaseAgent, env: MazeEnv, max_steps: int = 50) -> int:
     return steps
 
 
-def train_with_logging(agent: BaseAgent, env: MazeEnv, episodes: int = 10):
+def train_with_logging(agent: BaseAgent, env: MazeEnv, episodes: int = 10, seed: Optional[int] = None):
     """Compatibility wrapper for logging-style training."""
-    return train(agent, env, episodes=episodes)
+    return train(agent, env, episodes=episodes, seed=seed)
 
 
-def get_rewards(agent: BaseAgent, env: MazeEnv) -> float:
+def get_rewards(agent: BaseAgent, env: MazeEnv, seed: Optional[int] = None) -> float:
     """Run one episode with epsilon=0.1 and return reward."""
-    reward, _ = run_episode(env, agent, 0.1)
+    reward, _ = run_episode(env, agent, 0.1, seed=seed)
     return reward
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Maze solver")
-    parser.add_argument("--episodes", type=int, default=100, help="Number of episodes")
+    parser.add_argument("--episodes", type=int, default=DEFAULT["episodes"], help="Number of episodes")
+    parser.add_argument("--size", type=int, default=DEFAULT["size"], help="Grid size")
+    parser.add_argument("--alpha", type=float, default=DEFAULT["alpha"], help="Learning rate")
+    parser.add_argument("--gamma", type=float, default=DEFAULT["gamma"], help="Discount factor")
+    parser.add_argument("--epsilon", type=float, default=DEFAULT["epsilon"], help="Initial epsilon")
+    parser.add_argument("--decay", type=float, default=DEFAULT["decay"], help="Epsilon decay")
+    parser.add_argument("--min-eps", type=float, default=DEFAULT["min_eps"], help="Minimum epsilon")
+    parser.add_argument("--seed", type=int, default=0, help="Random seed for reproducibility")
     args = parser.parse_args()
 
-    env = MazeEnv(size=5)
-    agent = QLearningAgent(env.observation_space.n, env.action_space.n)
-    train(agent, env, episodes=args.episodes)
+    set_seed(args.seed)
+    env = MazeEnv(size=args.size, seed=args.seed)
+    # Allow overriding alpha/gamma per agent if needed
+    agent = QLearningAgent(env.observation_space.n, env.action_space.n, alpha=args.alpha, gamma=args.gamma)
+    train(agent, env, episodes=args.episodes, epsilon=args.epsilon, decay=args.decay, min_eps=args.min_eps, seed=args.seed)
