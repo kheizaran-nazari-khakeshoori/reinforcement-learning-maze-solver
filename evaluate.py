@@ -1,9 +1,13 @@
 """Evaluate."""
+
+from typing import Optional
 from maze_solver.env import MazeEnv
-def evaluate(agent, env, episodes=10, max_steps=50):
+
+def evaluate(agent, env, episodes=10, max_steps=50, seed: Optional[int] = None):
     succ=0; total_steps=0
-    for _ in range(episodes):
-        s,_=env.reset(); done=False; steps=0
+    for ep in range(episodes):
+        ep_seed = seed + ep if seed is not None else None
+        s,_=env.reset(seed=ep_seed); done=False; steps=0
         while not done and steps<max_steps:
             a=agent.act(s, 0.0)
             ns,_,term,trunc,_=env.step(a)
