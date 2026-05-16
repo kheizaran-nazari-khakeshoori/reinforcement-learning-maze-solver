@@ -62,7 +62,7 @@ Saved maze.mp4 (exit 0)
 - Custom `gymnasium.Env` with discrete states `r*N+c`, 4 actions, sparse rewards (`+1` goal, `-1` trap, `-0.01` step)
 - Optimality verification against BFS shortest path
 - Three render modes: ANSI terminal, Matplotlib, interactive PyGame GUI with video export via `ffmpeg`
-- Fully tested (27 pytest cases) and reproducible training pipeline
+- Fully tested (33 pytest cases) and reproducible training pipeline
 
 ### Built With
 `Python 3.10+` • `Gymnasium 1.3` • `NumPy` • `PyGame 2.6` • `Matplotlib` • `PyTest 9` • `FFmpeg 8`
@@ -343,7 +343,7 @@ PyGame gives pixel-perfect interactive control and `surfarray` access for frame-
 
 **Solution**
 - Fixed to `VAL_04=4` and `return 5`
-- Verified with `py_compile` and `pytest -q` → 27 passed
+- Verified with `py_compile` and `pytest -q` → 33 passed
 
 **Result**
 Clean import on 3.10–3.14.
@@ -383,7 +383,7 @@ Reliable video on stock Fedora without extra `rpmfusion` codec install.
 │   ├── gui.py                # MazeGUI (PyGame)
 │   ├── utils.py              # bfs, path helpers, manhattan
 │   └── __init__.py
-├── tests/                    # 27 pytest cases
+├── tests/                    # 33 pytest cases
 │   ├── test_state_helpers.py
 │   ├── test_terminal.py
 │   └── ...
@@ -436,7 +436,7 @@ No env vars needed. Edit `config.py:2` or pass `MazeEnv(size=5, walls=[...], tra
 
 **Run**
 ```bash
-pytest -q                         # all 27 tests
+pytest -q                         # all 33 tests
 python3.12 train.py --episodes 10 # quick smoke
 python3.12 record.py              # full 2000-episode train + video
 ```
@@ -447,7 +447,7 @@ python3.12 record.py              # full 2000-episode train + video
 
 **Automated Testing**
 ```bash
-pytest -v                          # 27 tests
+pytest -v                          # 33 tests
 pytest tests/test_state_helpers.py tests/test_terminal.py tests/test_wall_validation.py
 python -m py_compile maze_solver/*.py config.py
 ```
@@ -465,7 +465,7 @@ python3.12 record.py && ffprobe maze.mp4
 ```
 
 **Expected Outcome**
-- All 27 pytest pass
+- All 33 pytest pass
 - `evaluate` success ≥0.95 after 2000 episodes on empty 5×5 (optimal 8 steps)
 - GIFs in `assets/` preview directly on GitHub (e.g., `maze_programmatic.gif` 944×944, `demo_full.gif` 608×640)
 
