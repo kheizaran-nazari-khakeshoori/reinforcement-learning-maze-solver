@@ -22,3 +22,12 @@ htmlcov/
 
 # OS
 .DS_Store
+
+# Training outputs
+maze.mp4
+*.mp4
+*.png
+*.npy
+curve.png
+maze.mp4
+assets/*.mp4
