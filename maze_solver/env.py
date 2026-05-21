@@ -23,7 +23,7 @@ __all__ = ["MazeEnv", "DEFAULT_SIZE"]
 
 
 class MazeEnv(gym.Env):
-    """Custom Gridworld maze environment.
+    """Custom Gridworld maze environment with seed support.
 
     Grid size N x N, start at (0,0), goal at (N-1,N-1).
     Supports walls, traps, and discrete actions 0:up,1:right,2:down,3:left.
