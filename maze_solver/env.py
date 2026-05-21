@@ -1,4 +1,7 @@
-"""Maze environment module."""
+"""Maze environment module.
+
+Gymnasium-compatible Gridworld with seeding support.
+"""
 
 import gymnasium as gym
 import numpy as np
