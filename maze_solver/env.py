@@ -55,10 +55,10 @@ class MazeEnv(gym.Env):
         if seed is not None:
             self.reset(seed=seed)
 
-    def _pos_to_state(self, pos):
+    def _pos_to_state(self, pos: tuple[int, int]) -> int:
         return pos[0] * self.size + pos[1]
 
-    def _state_to_pos(self, state):
+    def _state_to_pos(self, state: int) -> tuple[int, int]:
         return (state // self.size, state % self.size)
 
     def _is_valid(self, pos):
