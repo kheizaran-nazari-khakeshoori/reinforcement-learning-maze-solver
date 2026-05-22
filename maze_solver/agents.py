@@ -6,7 +6,7 @@ import numpy as np
 
 
 class BaseAgent:
-    """Base tabular agent with epsilon-greedy policy."""
+    """Base tabular agent with epsilon-greedy policy and type hints."""
 
     def __init__(self, n_states: int, n_actions: int, alpha: float = 0.1, gamma: float = 0.99):
         self.n_states = n_states
