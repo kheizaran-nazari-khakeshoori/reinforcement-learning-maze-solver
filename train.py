@@ -1,4 +1,4 @@
-"""Training loop for Gridworld agents."""
+"""Training loop for Gridworld agents with seeding."""
 
 import argparse
 import random
