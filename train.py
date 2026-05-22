@@ -71,7 +71,7 @@ def train(
     min_eps: float = 0.05,
     seed: Optional[int] = None,
 ) -> Tuple[List[float], List[int]]:
-    """Train agent with epsilon decay.
+    """Train agent with epsilon decay and seed logging.
 
     Args:
         agent: RL agent.
