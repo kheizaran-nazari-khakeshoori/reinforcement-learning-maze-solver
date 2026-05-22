@@ -110,3 +110,5 @@ class SarsaAgent(BaseAgent):
         td_target = reward + self.gamma * nxt
         td_error = td_target - self.q_table[state, action]
         self.q_table[state, action] += self.alpha * td_error
+
+# type hints verified
