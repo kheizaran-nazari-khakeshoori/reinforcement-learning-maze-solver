@@ -1,4 +1,4 @@
-"""Tabular agents: Q-Learning (off-policy) and SARSA (on-policy)."""
+"""Tabular agents: Q-Learning and SARSA with unified update interface."""
 
 from typing import Optional
 
