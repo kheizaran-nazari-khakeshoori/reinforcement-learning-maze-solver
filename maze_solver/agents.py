@@ -49,8 +49,10 @@ class BaseAgent:
         next_state: int,
         done: bool,
         next_action: Optional[int] = None,
+        *args,
+        **kwargs,
     ) -> None:
-        """Unified update interface.
+        """Unified update interface with *args for backwards compat.
 
         Args:
             state: Current state.
