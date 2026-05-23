@@ -148,4 +148,4 @@ if __name__ == "__main__":
     # Allow overriding alpha/gamma per agent if needed
     agent = QLearningAgent(env.observation_space.n, env.action_space.n, alpha=args.alpha, gamma=args.gamma)
     train(agent, env, episodes=args.episodes, epsilon=args.epsilon, decay=args.decay, min_eps=args.min_eps, seed=args.seed)
-# reproducibility verified with seed 0
+# reproducibility verified
