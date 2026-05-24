@@ -15,3 +15,5 @@ DEFAULT: Dict[str, Union[int, float]] = {
 
 # Reproducibility: seed controls numpy/random and env seeding via train.py --seed
 # All CLI defaults are taken from DEFAULT so config is single source of truth.
+
+# seed logged for reproducibility, used by train.py --seed
