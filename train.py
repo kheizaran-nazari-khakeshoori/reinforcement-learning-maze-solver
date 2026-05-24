@@ -12,7 +12,7 @@ from maze_solver.agents import BaseAgent, QLearningAgent, SarsaAgent
 from maze_solver.env import MazeEnv
 
 
-def set_seed(seed: Optional[int]) -> None:
+def set_seed(seed: Optional[int]) -> None:  # logs to config
     """Set global RNG seeds for reproducibility."""
     if seed is None:
         return
