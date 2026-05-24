@@ -10,7 +10,7 @@ DEFAULT: Dict[str, Union[int, float]] = {
     "epsilon": 1.0,
     "decay": 0.995,
     "min_eps": 0.05,
-    "seed": 0,
+    "seed": 0,  # reproducible default
 }
 
 # Reproducibility: seed controls numpy/random and env seeding via train.py --seed
