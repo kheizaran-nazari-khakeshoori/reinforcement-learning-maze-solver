@@ -1,4 +1,4 @@
-"""Evaluate."""
+"""Evaluation with seed support."""
 
 from typing import Optional
 from maze_solver.env import MazeEnv
