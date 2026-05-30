@@ -13,3 +13,6 @@ format:
 	black .
 
 check: lint test
+
+train:
+	python train.py --episodes 5000 --seed 0
