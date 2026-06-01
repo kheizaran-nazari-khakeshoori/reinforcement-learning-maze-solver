@@ -1,4 +1,4 @@
-"""Path utilities: BFS optimal baseline and helpers."""
+"""Path utilities: BFS optimal baseline and helpers with typing."""
 
 from collections import deque
 from typing import List, Tuple, Set, Optional, Dict
