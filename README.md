@@ -494,3 +494,5 @@ python3.12 record.py && ffprobe maze.mp4
 **Disclaimer**
 This project is intended for educational and research purposes only. Licensed under the **MIT License**.
 
+
+<!-- updated for ci badge -->
