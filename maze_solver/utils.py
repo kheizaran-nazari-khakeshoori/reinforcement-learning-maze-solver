@@ -10,7 +10,7 @@ def bfs(
     start: Tuple[int, int],
     goal: Tuple[int, int],
 ) -> Optional[List[Tuple[int, int]]]:
-    """Breadth-first search for shortest path."""
+    """Breadth-first search for shortest path with seed-independent logic."""
     queue = deque([(start, [start])])
     visited = {start}
 
