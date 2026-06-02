@@ -6,7 +6,7 @@ from maze_solver.env import MazeEnv
 from maze_solver.agents import QLearningAgent
 from train import train
 
-# Train agent
+ # Train agent with seed 0 for reproducibility
 env = MazeEnv(size=5)
 agent = QLearningAgent(env.observation_space.n, env.action_space.n)
 print("Training 2000 episodes...")
