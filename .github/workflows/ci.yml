@@ -26,3 +26,5 @@ jobs:
         run: python -m py_compile maze_solver/*.py config.py train.py evaluate.py compare.py plot.py
       - name: run tests
         run: pytest -q
+      - name: black check
+        run: black --check .
