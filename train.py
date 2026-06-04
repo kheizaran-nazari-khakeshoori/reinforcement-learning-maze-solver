@@ -1,6 +1,7 @@
 """Training loop for Gridworld agents with seeding."""
 
 import argparse
+import csv
 import logging
 import random
 from typing import Tuple, List, Optional
@@ -18,6 +19,29 @@ def set_seed(seed: Optional[int]) -> None:  # logs to config
         return
     random.seed(seed)
     np.random.seed(seed)
+
+
+class CsvLogger:
+    """Simple CSV logger for training metrics."""
+    def __init__(self, path: str = "training_log.csv"):
+        self.path = path
+        self.file = open(path, "w", newline="")
+        self.writer = csv.writer(self.file)
+        self.writer.writerow(["episode", "reward", "steps", "epsilon"])
+
+    def log(self, episode: int, reward: float, steps: int, epsilon: float):
+        self.writer.writerow([episode, reward, steps, epsilon])
+
+    def close(self):
+        self.file.close()
+
+
+def get_tensorboard_writer(log_dir: str = "runs"):
+    try:
+        from torch.utils.tensorboard import SummaryWriter
+        return SummaryWriter(log_dir)
+    except ImportError:
+        return None
 
 
 def run_episode(env: MazeEnv, agent: BaseAgent, epsilon: float = 0.1, seed: Optional[int] = None) -> Tuple[float, int]:
