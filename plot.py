@@ -34,3 +34,19 @@ def plot_comparison(q_rewards: List[float], s_rewards: List[float], save: str = 
 
 def save_curve(rewards: List[float], path: str = "tmp.png") -> None:
     plot_rewards(rewards, save=path)
+
+
+def plot_q_heatmap(agent, size: int = 5, save: str = "q_heatmap.png") -> None:
+    """Visualize max Q-value per state as heatmap."""
+    import numpy as np
+    q_max = agent.q_table.max(axis=1).reshape(size, size)
+    plt.figure()
+    plt.imshow(q_max, cmap="viridis")
+    plt.colorbar(label="max Q")
+    plt.title("Q-table heatmap (max over actions)")
+    for r in range(size):
+        for c in range(size):
+            plt.text(c, r, f"{q_max[r,c]:.2f}", ha="center", va="center", color="white", fontsize=6)
+    plt.tight_layout()
+    plt.savefig(save)
+    plt.close()
