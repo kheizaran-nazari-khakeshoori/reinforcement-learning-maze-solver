@@ -111,22 +111,31 @@ def train(
         (rewards, steps) histories.
     """
     set_seed(seed)
-    # Seed env once at start; per-episode seed derived deterministically if needed
     if seed is not None:
         env.reset(seed=seed)
+
+    # experiment tracking: csv + tensorboard
+    csv_logger = CsvLogger()
+    tb_writer = get_tensorboard_writer()
 
     cur_eps = epsilon
     rewards: List[float] = []
     steps_hist: List[int] = []
 
     for ep in range(episodes):
-        # Derive per-episode seed for determinism if base seed given
         ep_seed = seed + ep if seed is not None else None
         reward, steps = run_episode(env, agent, cur_eps, seed=ep_seed)
         rewards.append(reward)
         steps_hist.append(steps)
+        csv_logger.log(ep, reward, steps, cur_eps)
+        if tb_writer:
+            tb_writer.add_scalar("reward", reward, ep)
+            tb_writer.add_scalar("steps", steps, ep)
         cur_eps = max(min_eps, cur_eps * decay)
 
+    csv_logger.close()
+    if tb_writer:
+        tb_writer.close()
     return rewards, steps_hist
 
 
