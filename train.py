@@ -3,6 +3,7 @@
 import argparse
 import csv
 import logging
+
 import random
 from typing import Tuple, List, Optional
 
@@ -115,6 +116,7 @@ def train(
         env.reset(seed=seed)
 
     # experiment tracking: csv + tensorboard
+    logging.info(f"training start episodes={episodes} seed={seed}")
     csv_logger = CsvLogger()
     tb_writer = get_tensorboard_writer()
 
