@@ -37,7 +37,7 @@ def save_curve(rewards: List[float], path: str = "tmp.png") -> None:
 
 
 def plot_q_heatmap(agent, size: int = 5, save: str = "q_heatmap.png") -> None:
-    """Visualize max Q-value per state as heatmap."""
+    """Visualize max Q-value per state as heatmap for interpretability."""
     import numpy as np
     q_max = agent.q_table.max(axis=1).reshape(size, size)
     plt.figure()
