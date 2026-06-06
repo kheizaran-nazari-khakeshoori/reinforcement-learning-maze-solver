@@ -1,6 +1,18 @@
-"""Central hyperparameters and defaults."""
+"""Central hyperparameters and defaults with dataclass."""
 
+from dataclasses import dataclass, asdict
 from typing import Dict, Union
+
+@dataclass
+class Config:
+    size: int = 5
+    episodes: int = 5000
+    alpha: float = 0.1
+    gamma: float = 0.99
+    epsilon: float = 1.0
+    decay: float = 0.995
+    min_eps: float = 0.05
+    seed: int = 0
 
 DEFAULT: Dict[str, Union[int, float]] = {
     "size": 5,
@@ -12,6 +24,12 @@ DEFAULT: Dict[str, Union[int, float]] = {
     "min_eps": 0.05,
     "seed": 0,  # reproducible default
 }
+
+# dataclass instance for typed access
+CONFIG = Config()
+
+def get_config_dict() -> Dict[str, Union[int, float]]:
+    return asdict(CONFIG)
 
 # Reproducibility: seed controls numpy/random and env seeding via train.py --seed
 # All CLI defaults are taken from DEFAULT so config is single source of truth.
