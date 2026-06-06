@@ -9,7 +9,7 @@ from typing import Tuple, List, Optional
 
 import numpy as np
 
-from config import DEFAULT
+from config import CONFIG, DEFAULT
 from maze_solver.agents import BaseAgent, QLearningAgent, SarsaAgent
 from maze_solver.env import MazeEnv
 
@@ -168,14 +168,14 @@ def get_rewards(agent: BaseAgent, env: MazeEnv, seed: Optional[int] = None) -> f
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Maze solver")
-    parser.add_argument("--episodes", type=int, default=DEFAULT["episodes"], help="Number of episodes")
-    parser.add_argument("--size", type=int, default=DEFAULT["size"], help="Grid size")
-    parser.add_argument("--alpha", type=float, default=DEFAULT["alpha"], help="Learning rate")
-    parser.add_argument("--gamma", type=float, default=DEFAULT["gamma"], help="Discount factor")
-    parser.add_argument("--epsilon", type=float, default=DEFAULT["epsilon"], help="Initial epsilon")
-    parser.add_argument("--decay", type=float, default=DEFAULT["decay"], help="Epsilon decay")
-    parser.add_argument("--min-eps", type=float, default=DEFAULT["min_eps"], help="Minimum epsilon")
-    parser.add_argument("--seed", type=int, default=0, help="Random seed for reproducibility")
+    parser.add_argument("--episodes", type=int, default=CONFIG.episodes, help="Number of episodes")
+    parser.add_argument("--size", type=int, default=CONFIG.size, help="Grid size")
+    parser.add_argument("--alpha", type=float, default=CONFIG.alpha, help="Learning rate")
+    parser.add_argument("--gamma", type=float, default=CONFIG.gamma, help="Discount factor")
+    parser.add_argument("--epsilon", type=float, default=CONFIG.epsilon, help="Initial epsilon")
+    parser.add_argument("--decay", type=float, default=CONFIG.decay, help="Epsilon decay")
+    parser.add_argument("--min-eps", type=float, default=CONFIG.min_eps, help="Minimum epsilon")
+    parser.add_argument("--seed", type=int, default=CONFIG.seed, help="Random seed for reproducibility")
     args = parser.parse_args()
 
     set_seed(args.seed)
