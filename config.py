@@ -35,3 +35,4 @@ def get_config_dict() -> Dict[str, Union[int, float]]:
 # All CLI defaults are taken from DEFAULT so config is single source of truth.
 
 # seed logged for reproducibility, used by train.py --seed
+# defaults synced
