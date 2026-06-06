@@ -1,4 +1,4 @@
-"""Training loop for Gridworld agents with seeding."""
+"""Training loop for Gridworld agents with seeding and experiment tracking."""
 
 import argparse
 import csv
