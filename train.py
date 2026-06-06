@@ -185,3 +185,5 @@ if __name__ == "__main__":
     train(agent, env, episodes=args.episodes, epsilon=args.epsilon, decay=args.decay, min_eps=args.min_eps, seed=args.seed)
 # reproducibility verified
 # formatted with black
+
+# logger verified
