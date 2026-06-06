@@ -1,6 +1,6 @@
 """Central hyperparameters and defaults with dataclass."""
 
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from typing import Dict, Union
 
 @dataclass
