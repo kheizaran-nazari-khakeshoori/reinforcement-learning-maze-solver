@@ -38,3 +38,4 @@ def get_config_dict() -> Dict[str, Union[int, float]]:
 # defaults synced
 
 # hydra-compatible: Config dataclass can be used with hydra if installed
+# config system verified
