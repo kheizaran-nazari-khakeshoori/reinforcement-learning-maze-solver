@@ -36,3 +36,5 @@ def get_config_dict() -> Dict[str, Union[int, float]]:
 
 # seed logged for reproducibility, used by train.py --seed
 # defaults synced
+
+# hydra-compatible: Config dataclass can be used with hydra if installed
