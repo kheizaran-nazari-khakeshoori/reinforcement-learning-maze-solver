@@ -423,6 +423,10 @@ python3.12 record.py && ffprobe maze.mp4
 
 ---
 
+## Citation
+
+If you use this project, please cite `CITATION.cff`.
+
 ## Author
 
 **Kheizaran Nazari Khakeshoori**
