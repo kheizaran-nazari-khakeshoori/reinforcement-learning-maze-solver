@@ -11,6 +11,11 @@ import numpy as np
 
 from config import CONFIG, DEFAULT
 from maze_solver.agents import BaseAgent, QLearningAgent, SarsaAgent
+try:
+    from maze_solver.dqn import DQNAgent
+    HAS_DQN = True
+except ImportError:
+    HAS_DQN = False
 from maze_solver.env import MazeEnv
 
 
