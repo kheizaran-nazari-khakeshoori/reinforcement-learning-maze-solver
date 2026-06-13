@@ -33,3 +33,5 @@ maze.mp4
 assets/*.mp4
 
 # generated training artifacts
+*.csv
+runs/
