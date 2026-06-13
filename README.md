@@ -235,7 +235,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for full architecture.
 
 ## Engineering Decisions
 
-<details><summary><strong>Why Tabular Q-Learning / SARSA over Deep RL?</strong></summary>
+<details><summary><strong>Why Tabular Q-Learning / SARSA over Deep RL? (see DQN for N>=10)</strong></summary>
 
 Grid ≤25 states is solvable exactly; DQN adds overhead without benefit. Tabular gives interpretable Q-values, provable convergence, and <1s training. Chosen for portfolio clarity.
 
