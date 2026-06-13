@@ -89,3 +89,5 @@ class DQNAgent:
             # tabular fallback
             best = 0.0 if done else float(np.max(self.q_table[ns]))
             self.q_table[s,a] += self.alpha * (r + self.gamma*best - self.q_table[s,a])
+
+# network supports N>=10 with embedding
