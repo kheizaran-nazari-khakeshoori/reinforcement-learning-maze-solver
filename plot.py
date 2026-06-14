@@ -37,6 +37,18 @@ def save_curve(rewards: List[float], path: str = "tmp.png") -> None:
     plot_rewards(rewards, save=path)
 
 
+def plot_ablation_table(results, save: str = "ablation.png") -> None:
+    """Plot ablation results as table."""
+    import matplotlib.pyplot as plt
+    fig, ax = plt.subplots()
+    ax.axis("tight")
+    ax.axis("off")
+    cols = list(results[0].keys()) if results else []
+    table = ax.table(cellText=[[str(v) for v in r.values()] for r in results], colLabels=cols, loc="center")
+    plt.savefig(save)
+    plt.close()
+
+
 def plot_q_heatmap(agent, size: int = 5, save: str = "q_heatmap.png") -> None:
     """Visualize max Q-value per state as heatmap for interpretability."""
     import numpy as np
