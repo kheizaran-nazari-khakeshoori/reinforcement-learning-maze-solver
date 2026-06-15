@@ -30,3 +30,4 @@ def get_curriculum_env(size, seed=None):
     return MazeEnv(size=size, walls=walls, traps=traps, seed=seed)
 
 # schedule verified 4x4->7x7
+# stochastic traps per episode
