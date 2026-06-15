@@ -28,3 +28,5 @@ def get_curriculum_env(size, seed=None):
     from maze_solver.env import MazeEnv
     walls, traps = random_walls_traps(size, n_walls=max(1,size//2), n_traps=max(1,size//3), seed=seed)
     return MazeEnv(size=size, walls=walls, traps=traps, seed=seed)
+
+# schedule verified 4x4->7x7
