@@ -192,3 +192,5 @@ if __name__ == "__main__":
 # formatted with black
 
 # logger verified
+
+# curriculum training uses maze_solver.curriculum.get_curriculum_env
