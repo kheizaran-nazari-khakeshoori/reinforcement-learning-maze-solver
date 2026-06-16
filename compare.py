@@ -36,5 +36,6 @@ def quick_compare() -> Tuple[List[float], List[float]]:
 
 def compare_lengths():
     from maze_solver.utils import bfs
+from maze_solver.baselines import astar, dijkstra
 
     return bfs(3, set(), (0, 0), (2, 2))
