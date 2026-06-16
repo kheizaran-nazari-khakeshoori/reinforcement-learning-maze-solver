@@ -31,3 +31,4 @@ def get_curriculum_env(size, seed=None):
 
 # schedule verified 4x4->7x7
 # stochastic traps per episode
+# debuging curriculum verified
