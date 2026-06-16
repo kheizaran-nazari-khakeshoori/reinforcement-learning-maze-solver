@@ -23,3 +23,15 @@ def quick_eval(agent, env):
 
 def success_rate(agent, env):
     return evaluate(agent, env)["success"]
+
+def evaluate_with_stats(agent, env_fn, episodes=20, seeds=20, seed=0):
+    """Report mean +/- std over 20 eval seeds."""
+    import numpy as np
+    successes=[]
+    steps=[]
+    for s in range(seeds):
+        env = env_fn(seed=seed+s)
+        res = evaluate(agent, env, episodes=episodes, seed=seed+s)
+        successes.append(res["success"])
+        steps.append(res["avg_steps"])
+    return {"mean_success": float(np.mean(successes)), "std_success": float(np.std(successes)), "mean_steps": float(np.mean(steps)), "std_steps": float(np.std(steps))}
