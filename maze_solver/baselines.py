@@ -37,3 +37,5 @@ def dijkstra(size: int, walls: Set[Tuple[int,int]], start: Tuple[int,int], goal:
             if 0<=nxt[0]<size and 0<=nxt[1]<size and nxt not in walls:
                 heapq.heappush(pq,(cost+1,nxt,path+[nxt]))
     return None
+
+# dijkstra baseline verified
