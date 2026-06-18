@@ -224,6 +224,8 @@ See *Example Output* under System Demonstration. Full verbose ffmpeg log is writ
 | SarsaAgent | 500 | 0.945 (last 50) | ~8.6 | ~0.95 | +0.6 |
 | QLearning | 500 | 0.945 (last 50) | ~8.4 | ~0.96 | +0.4 |
 | Random policy | 0 | -3.0 | >50 | 0.05 | +42 |
+| A* (baseline) | - | - | 8.0 | 1.00 | 0 |
+| Dijkstra (baseline) | - | - | 8.0 | 1.00 | 0 |
 
 **Interpretation:** Both TD methods converge to near-optimal within 500 episodes; Q-Learning slightly lower variance off-policy, SARSA more conservative near traps. After 2000–5000 episodes the greedy policy is optimal on empty grid and within 1 step on obstructed grids. Training cost is <1s on CPU (493 LOC total). GIF `assets/maze_programmatic.gif` (944×944, 1.28s) captures the optimal rollout; final screen-recorded GIF `assets/demo_full.gif` (608×640, 16.25s) shows the full interactive session.
 
