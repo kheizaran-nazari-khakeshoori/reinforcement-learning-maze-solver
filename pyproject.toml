@@ -3,7 +3,7 @@ name = "reinforcement-learning-maze-solver"
 version = "0.1.0"
 description = "Gridworld / Maze Solver with Q-Learning and SARSA"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.13"
 license = "MIT"
 authors = [
     {name = "Kheizaran Nazari Khakeshoori", email = "kheizarannazarikhakeshoori@gmail.com"}
@@ -76,4 +76,4 @@ ignore_missing_imports = true
 
 # dependencies synced with requirements.txt
 
-# synced with requirements
+# requires-python pinned <3.13 for pygame wheel, synced with requirements
