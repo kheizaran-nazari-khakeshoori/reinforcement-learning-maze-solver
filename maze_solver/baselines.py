@@ -39,3 +39,4 @@ def dijkstra(size: int, walls: Set[Tuple[int,int]], start: Tuple[int,int], goal:
     return None
 
 # dijkstra baseline verified
+# debuging baselines verified
