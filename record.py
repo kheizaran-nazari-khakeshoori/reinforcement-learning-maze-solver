@@ -5,9 +5,10 @@ import pygame
 from maze_solver.env import MazeEnv
 from maze_solver.agents import QLearningAgent
 from train import train
+from config import DEMO_WALLS, DEMO_TRAPS
 
  # Train agent with seed 0 for reproducibility
-env = MazeEnv(size=5)
+env = MazeEnv(size=5, walls=DEMO_WALLS, traps=DEMO_TRAPS)
 agent = QLearningAgent(env.observation_space.n, env.action_space.n)
 print("Training 2000 episodes...")
 train(agent, env, episodes=2000)
