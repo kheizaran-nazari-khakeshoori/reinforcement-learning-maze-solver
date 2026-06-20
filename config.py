@@ -28,6 +28,11 @@ DEFAULT: Dict[str, Union[int, float]] = {
 # dataclass instance for typed access
 CONFIG = Config()
 
+# demo maze: black squares = walls, agent learns to avoid them
+DEMO_WALLS = [(1,1), (1,2), (2,1), (3,3)]
+DEMO_TRAPS = [(2,3), (3,1)]
+
+
 def get_config_dict() -> Dict[str, Union[int, float]]:
     return asdict(CONFIG)
 
