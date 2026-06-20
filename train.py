@@ -9,7 +9,7 @@ from typing import Tuple, List, Optional
 
 import numpy as np
 
-from config import CONFIG, DEFAULT
+from config import CONFIG, DEFAULT, DEMO_WALLS, DEMO_TRAPS
 from maze_solver.agents import BaseAgent, QLearningAgent, SarsaAgent
 try:
     from maze_solver.dqn import DQNAgent
@@ -184,7 +184,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     set_seed(args.seed)
-    env = MazeEnv(size=args.size, seed=args.seed)
+    # use demo obstacles so agent learns to avoid black squares
+    walls = DEMO_WALLS if args.size==5 else []
+    traps = DEMO_TRAPS if args.size==5 else []
+    env = MazeEnv(size=args.size, walls=walls, traps=traps, seed=args.seed)
     # Allow overriding alpha/gamma per agent if needed
     agent = QLearningAgent(env.observation_space.n, env.action_space.n, alpha=args.alpha, gamma=args.gamma)
     train(agent, env, episodes=args.episodes, epsilon=args.epsilon, decay=args.decay, min_eps=args.min_eps, seed=args.seed)
