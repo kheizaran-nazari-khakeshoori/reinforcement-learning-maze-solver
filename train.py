@@ -181,12 +181,13 @@ if __name__ == "__main__":
     parser.add_argument("--decay", type=float, default=CONFIG.decay, help="Epsilon decay")
     parser.add_argument("--min-eps", type=float, default=CONFIG.min_eps, help="Minimum epsilon")
     parser.add_argument("--seed", type=int, default=CONFIG.seed, help="Random seed for reproducibility")
+    parser.add_argument("--demo", action="store_true", help="Use demo walls/traps (black squares)")
     args = parser.parse_args()
 
     set_seed(args.seed)
     # use demo obstacles so agent learns to avoid black squares
-    walls = DEMO_WALLS if args.size==5 else []
-    traps = DEMO_TRAPS if args.size==5 else []
+    walls = DEMO_WALLS if (args.demo or args.size==5) else []
+    traps = DEMO_TRAPS if (args.demo or args.size==5) else []
     env = MazeEnv(size=args.size, walls=walls, traps=traps, seed=args.seed)
     # Allow overriding alpha/gamma per agent if needed
     agent = QLearningAgent(env.observation_space.n, env.action_space.n, alpha=args.alpha, gamma=args.gamma)
