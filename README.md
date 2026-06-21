@@ -186,6 +186,9 @@ q_rewards, s_rewards = run_compare(episodes=500)
 # from plot import plot_rewards; plot_rewards(q_rewards)
 ```
 
+### How obstacles work
+Black squares = walls (blocked, stay in place), red squares = traps (-1 reward), gold = goal (+1). Agent gets -0.01 per step, so it learns shortest safe path via Q-learning `Q(s,a) += alpha*(r+gamma*maxQ - Q)`. Trained 5000 episodes avoid walls.
+
 ### Configuration / Integration
 No API keys required. Key configs in `config.py:2`:
 ```python
