@@ -45,6 +45,10 @@
 ![Final Demo — Screen Recorded](assets/demo_full.gif)
 *`assets/demo_full.gif` — 255KB, 608×640, 16.25s, 12.5 FPS — **final answer***
 
+**New — with obstacles (black walls, red traps) — trained 2000 episodes, avoids walls (600×600 GIF, 10 FPS):**
+![With Walls](assets/maze_with_walls.gif)
+*`assets/maze_with_walls.gif` — 19KB, 300×300, 1.3s, 10 FPS — `maze.mp4` with `DEMO_WALLS` `[(1,1),(1,2),(2,1),(3,3)]` — `python record.py`*
+
 ### Example Output
 ```
 Training 2000 episodes...
