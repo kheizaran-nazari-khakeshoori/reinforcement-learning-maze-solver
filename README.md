@@ -1,7 +1,11 @@
-# Reinforcement Learning Maze Solver
+# RL Maze Solver — Tabular Q-Learning / SARSA vs BFS Baseline
 
-*Gridworld agent learns to navigate walls, avoid traps, and reach the goal via optimal shortest path using tabular Reinforcement Learning.*
+> Research prototype for Gridworld MDPs.
+> Question: can tabular TD agents match BFS-optimal paths under walls/traps with ε-greedy exploration?
 
+**Method:** Custom Gymnasium env; Q-Learning (off-policy) + SARSA (on-policy), ε 1.0→0.05; BFS-verified evaluation + PyGame rendering; pytest suite.
+**Reproduce:** `pip install -r requirements.txt` then `python train.py`
+**Author:** Kheizaran Nazari Khakeshoori — ORCID: https://orcid.org/0009-0000-2931-4503
 ***Portfolio Project*** *— Demonstrates Reinforcement Learning (Q-Learning / SARSA), MDP & Gymnasium environment engineering, tabular value-based agents, and PyGame visualization.*
 
 ---
